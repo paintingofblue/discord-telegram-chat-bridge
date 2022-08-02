@@ -1,5 +1,5 @@
 # Discord to Telegram bridge
-File to bridge chat between Discord and Telegram. This allows users to send messages in a server, and for the message to be sent in a Telegram group.
+File to bridge chat between Discord and Telegram. This allows users to send messages in a server, and for the message to also be sent in a Telegram group.
 
 # To-do
 * Add Telegram to Discord message sending.
@@ -36,4 +36,5 @@ Open the .env file provided, and replace the following values:
 Run main.py, and it should now be listening for any messages sent in the server your bot is in.
 
 ![image](https://user-images.githubusercontent.com/90877067/182317046-73e925c4-8a11-4ff5-993e-7e3db9ef5a26.png)
+
 ![image](https://user-images.githubusercontent.com/90877067/182317079-0e74c1ee-10ab-4fd9-9540-1a1557b2cdee.png)
