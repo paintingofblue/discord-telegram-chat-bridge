@@ -7,7 +7,7 @@ File to bridge chat between Discord and Telegram. This allows users to send mess
 
 # Installation
 
-Open your telegram client and start a chat with [BotFather](https://t.me/BotFather). Send the message “/newbot” (no quotes) and follow the instructions.
+Open your Telegram client and start a chat with [BotFather](https://t.me/BotFather). Send the message “/newbot” (no quotes) and follow the instructions.
 
 ![image](https://user-images.githubusercontent.com/90877067/182313481-fa70b777-c46f-4d59-8ddb-3dd55856d32d.png)
 
@@ -29,8 +29,8 @@ Make sure to note down the ID in the chat object.
 ![image](https://user-images.githubusercontent.com/90877067/182315491-7aedc897-a961-474c-9672-6293e80ea386.png)
 
 Open the .env file provided, and replace the following values:
-* Token - Your discord bot token
-* telegram_token - Your telegram bot token sent by BotFather
+* Token - Your Discord bot token
+* telegram_token - Your Telegram bot token sent by BotFather
 * chatid - The ID you just noted down from the POST request you made
 
 Run main.py, and it should now be listening for any messages sent in the server your bot is in.
