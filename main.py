@@ -13,6 +13,10 @@ webhookurl = os.getenv('webhook')
 bot = commands.Bot(command_prefix="!")
 previous = ''
 
+discid = {
+    putteleanddiscidshere: "only optional if you want automatic pfp and username on webook"
+}
+
 @tasks.loop(seconds=0.25)
 async def telegram_check():
     global result
@@ -22,11 +26,15 @@ async def telegram_check():
         f"https://api.telegram.org/bot{telegram_token}/getUpdates?offset=-1")
     try:
         result = r.json()['result'][0]['message']['text']
+        id = r.json()['result'][0]['message']['from']['id']
+        discid = iddict[id]
         if result != previous:
+            a = requests.get(f"https://discord.com/api/v10/users/{iddict[id]}",
+                             headers={"Authorization": f"Bot {token}"})
+            pfp = a.json()["avatar"]
+            user = a.json()["username"]
             webhook = DiscordWebhook(
-                url=webhookurl,
-                content=r.json()['result'][0]['message']['from']['username'] +
-                " - " + result)
+                url=webhookurl, username=user, avatar_url=f"https://cdn.discordapp.com/avatars/{discid}/{pfp}", rate_limit_retry=True, content=result) 
             webhook.execute()
         elif result == previous:
             pass
