@@ -1,5 +1,5 @@
-# Discord to Telegram bridge
-File to bridge chat between Discord and Telegram. This allows users to send messages & attatchments in a server, and for the message to also be sent in a Telegram group.
+# Discord Telegram bridge
+File to bridge chat between Discord and Telegram. This allows users to send messages & attatchments in a server, and for the message to also be sent in a Telegram group, & vice versa.
 
 # Supported
 * Discord > Telegram (messages & attatchments)
