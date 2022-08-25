@@ -1,9 +1,9 @@
 # Discord to Telegram bridge
-File to bridge chat between Discord and Telegram. This allows users to send messages in a server, and for the message to also be sent in a Telegram group.
+File to bridge chat between Discord and Telegram. This allows users to send messages & attatchments in a server, and for the message to also be sent in a Telegram group.
 
-# To-do
-* Add Telegram to Discord message sending.
-* Add the current channel in the message.
+# Supported
+* Discord > Telegram (messages & attatchments)
+* Telegram > Discord (messages & attatchments)
 
 # Installation
 
@@ -32,6 +32,7 @@ Open the .env file provided, and replace the following values:
 * Token - Your Discord bot token
 * telegram_token - Your Telegram bot token sent by BotFather
 * chatid - The ID you just noted down from the POST request you made
+* webhook - Make a discord webhook in your server
 
 Run main.py, and it should now be listening for any messages sent in the server your bot is in.
 
