@@ -1,21 +1,24 @@
 import os
 import requests
 import urllib.parse
+from discord import Intents
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from discord_webhook import DiscordWebhook
 
 load_dotenv()
-token = os.getenv('token')
-telegram_token = os.getenv('telegram_token')
-chatid = os.getenv('chatid')
-webhookurl = os.getenv('webhook')
-bot = commands.Bot(command_prefix="!")
-caption = ''
-previous = ''
+token = os.environ['token']
+telegram_token = os.environ['telegram_token']
+chatid = os.environ['chatid']
+webhookurl = os.environ['webhookurl']
+intents = Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='!', intents=intents)
+caption = ""
+normal_words = ['i', 'the', 'hi', 'and', 'to', 'a', 'it', 'is', 'in', 'you']
 
-discid = {
-    putteleanddiscidshere: "only optional if you want automatic pfp and username on webook"
+iddict = {
+    "telegramid": "discordid"
 }
 
 def downloader(fileid):
@@ -52,7 +55,6 @@ def downloader(fileid):
         webhook.execute()
         os.remove(filepath.split("/")[-1])
 
-
 def getdiscinfo(id):
     global pfp
     global user
@@ -60,7 +62,6 @@ def getdiscinfo(id):
                      headers={"Authorization": f"Bot {token}"})
     pfp = a.json()["avatar"]
     user = a.json()["username"]
-
 
 @tasks.loop(seconds=0.15)
 async def telegram_check():
@@ -86,7 +87,7 @@ async def telegram_check():
             previousfileid = fileid
     except:
         try:
-            fileid = r.json()['result'][0]['message']['photo'][0]['file_id']
+            fileid = r.json()['result'][0]['message']['photo'][-1]['file_id']
             if fileid != previousfileid:
                 try:
                     caption = r.json()['result'][0]['message']['caption']
@@ -134,9 +135,20 @@ async def telegram_check():
                 except:
                     pass
 
-
 @bot.event
 async def on_message(message):
+    global replymsg
+    msg = message
+    msgcontent = msg.content
+    if msg.reference != None:
+        channel = bot.get_channel(msg.reference.channel_id)
+        messagething = await channel.fetch_message(msg.reference.message_id)
+        replymsg = messagething.content
+    else:
+        replymsg = ""
+
+    await bot.process_commands(message)
+
     if message.author.bot == False:
         global msg1
         global msg2
@@ -145,38 +157,30 @@ async def on_message(message):
             for i in message.attachments:
                 files = files + f'{i}\n'
             msg1 = urllib.parse.quote(
-                f"{message.author.name}#{message.author.discriminator} - {message.content}\n{files}"
+                f"{message.author.name}#{message.author.discriminator} - {msgcontent}\n{files}"
             )
         except:
             msg1 = urllib.parse.quote(
-                f"{message.author.name}#{message.author.discriminator} - {message.content}"
+                f"{message.author.name}#{message.author.discriminator} - {msgcontent}"
             )
-
-        try:
-            if message.reference.cached_message != "None":
-                msg2 = urllib.parse.quote(
-                    f"Replying to: {message.reference.cached_message.content}")
-                requests.post(
-                    f"https://api.telegram.org/bot{telegram_token}/sendMessage?chat_id={chatid}&text={msg2}\n{msg1}"
-                )
-        except:
+        if replymsg != "":
+            msg2 = urllib.parse.quote(f"Replying to: {replymsg}")
+            requests.post(
+                f"https://api.telegram.org/bot{telegram_token}/sendMessage?chat_id={chatid}&text={msg2}\n{msg1}"
+            )
+        else:
             requests.post(
                 f"https://api.telegram.org/bot{telegram_token}/sendMessage?chat_id={chatid}&text={msg1}"
             )
-        else:
-            pass
-
 
 @bot.event
 async def on_ready():
-    global previous
     print(
         f'{bot.user.name}#{bot.user.discriminator} has connected to Discord!')
     telegram_check.start()
 
-
 global previous
-global previousfield
+global previousfileid
 r = requests.post(
     f"https://api.telegram.org/bot{telegram_token}/getUpdates?offset=-1")
 try:
@@ -194,4 +198,7 @@ except:
 
 previousfileid = ""
 
-bot.run(token)
+try:
+    bot.run(token)
+except:
+    os.system('kill 1')
