@@ -1,6 +1,10 @@
 # Discord Telegram bridge
 File to bridge chat between Discord and Telegram. This allows users to send messages & attatchments in a server, and for the message to also be sent in a Telegram group, & vice versa.
 
+# How it works
+A Discord bot listens for messages in a server. Upon a message being sent, it makes a request to Telegram's bot api with the chat id you've set. This sends the content of the message.
+While this goes on, the bot repeatedly checks for messages in Telegram as well. It sends a webhook, using the author's pfp and name.
+
 # Supported
 * Discord > Telegram (messages & attatchments)
 * Telegram > Discord (messages & attatchments)
