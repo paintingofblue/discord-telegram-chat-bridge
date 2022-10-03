@@ -20,7 +20,7 @@ Upon doing this, you are free to invite your bot to your group.
 
 ![image](https://user-images.githubusercontent.com/90877067/182314225-05fdab18-9bbd-4a95-b87d-81a86117cf0c.png)
 
-Once finished the above steps, make a POST request to [this link](https://api.telegram.org/bot<token>/getUpdates).
+Once finished the above steps, make a GET request to [this link](https://api.telegram.org/bot<token>/getUpdates).
 Replace <token> with the token BotFather provided you with, otherwise it won't work.
 
 Making the request with [Hoppscotch](https://hoppscotch.io/) provided me with this (Note: I'm blurring some information out. Your response body will look different to mine.)
