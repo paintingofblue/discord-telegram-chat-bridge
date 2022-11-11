@@ -1,11 +1,11 @@
 /* -- Constants -- */
 const { Utils } = require('./utils.js');
-const axios = require('axios');
-const fs = require('fs');
-const ini = require('ini');
-const config = ini.parse(fs.readFileSync("./config.ini", "utf-8"));
 const { Client } = require('discord.js');
 const client = new Client({ intents: 3276799 });
+const axios = require('axios');
+const ini = require('ini');
+const fs = require('fs');
+const config = ini.parse(fs.readFileSync("./config.ini", "utf-8"));
 
 /* -- Variables -- */
 let idDict = {}; // Formatted like {tgId: dcId}, used to give the bridge profile pictures & a name, or else it defaults to a Telegram icon and the username.
