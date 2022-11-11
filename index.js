@@ -72,7 +72,7 @@ client.on('ready', async () => {
                 await Utils.sendDiscMsg(avatar, name, `${text}\n\n${path}`);
             }
         })
-    }, 250); 
+    }, 250);
 });
 
 client.on('messageCreate', async (message) => {

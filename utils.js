@@ -1,10 +1,10 @@
 /* -- Constants -- */
 const { WebhookClient } = require('discord.js');
-const webhookClient = new WebhookClient({ url: config.discord.webhookUrl });
 const axios = require('axios');
 const ini = require('ini');
 const fs = require('fs');
 const config = ini.parse(fs.readFileSync("./config.ini", "utf-8"));
+const webhookClient = new WebhookClient({ url: config.discord.webhookUrl });
 
 /* -- Variables -- */
 let dcToken = config.discord.token;
