@@ -2,6 +2,9 @@
 
 File to bridge chat between Discord and Telegram. This allows users to send messages & attatchments in a server, and for the message to also be sent in a Telegram group.
 
+![image](https://user-images.githubusercontent.com/90877067/201297882-45093b37-9c65-4c4c-8742-9137bb097306.png)
+
+
 ## Supported
 
 * Discord > Telegram (messages & attatchments)
