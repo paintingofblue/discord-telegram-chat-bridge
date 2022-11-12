@@ -49,27 +49,61 @@ client.on('ready', async () => {
                 let avatar = "https://cdn.discordapp.com/attachments/889397754458169385/1040525918508159036/166815113322072452.png"
                 let name = response.message.from.username;
                 let text = "";
-                let path = "";
                 update_id = response.update_id;
 
                 if (response.message.from.id in idDict) {
                     discUser = await Utils.getUserInfo(idDict[response.message.from.id]);
                     avatar = `https://cdn.discordapp.com/avatars/${discUser.id}/${discUser.avatar}`;
                     name = discUser.username;
-                }
-
-                if ("photo" in response.message || "document" in response.message) {
-                    if ("caption" in response.message) {
-                        text = response.message.caption;
-                    }
-                    path = await Utils.getPhoto(response.message.photo[response.message.photo.length - 1].file_id);
+                } else {
+                    await axios.post(`https://api.telegram.org/bot${config.telegram.token}/getUserProfilePhotos`, {
+                        user_id: response.message.from.id,
+                        limit: 1
+                    }).then(async (response) => {
+                        if (response.data.result.total_count > 0 && response.status == 200) {
+                            avatar = await Utils.getPhoto(response.data.result.photos[0][[response.data.result.photos[0].length - 1]].file_id);
+                        }
+                    });
                 }
 
                 if ("text" in response.message) {
-                    text = response.message.text;
+                    if ('reply_to_message' in response.message) {
+                        let replyarr = response.message.reply_to_message
+                        if ('text' in replyarr) {
+                            text += `> ${replyarr.from.username} - ${replyarr.text}\n\n${response.message.text}`;
+                        } else if ('photo' in replyarr) {
+                            if ("caption" in replyarr) {
+                                text += `> ${replyarr.from.username} - ${replyarr.caption}\n> ${await Utils.getPhoto(replyarr.photo[replyarr.photo.length - 1].file_id)}\n\n${response.message.text}`;
+                            } else {
+                                text += `> ${replyarr.from.username} - ${await Utils.getPhoto(replyarr.photo[replyarr.photo.length - 1].file_id)}\n\n${response.message.text}`;
+                            }
+                        }
+                    } else {
+                        text = response.message.text;
+                    }
+                } else if ("photo" in response.message || "document" in response.message) {
+                    if ('reply_to_message' in response.message) {
+                        let replyarr = response.message.reply_to_message
+
+                        if ('text' in replyarr) {
+                            text += `> ${replyarr.from.username} - ${replyarr.text}\n\n${await Utils.getPhoto(response.message.photo[response.message.photo.length - 1].file_id)}`;
+                        } else if ('photo' in replyarr) {
+                            if ("caption" in replyarr) {
+                                text += `> ${replyarr.from.username} - ${replyarr.caption}\n> ${await Utils.getPhoto(replyarr.photo[replyarr.photo.length - 1].file_id)}\n\n`;
+                            } else {
+                                text += `> ${replyarr.from.username} - ${await Utils.getPhoto(replyarr.photo[replyarr.photo.length - 1].file_id)}\n\n`;
+                            }
+                        }
+                    } 
+                    
+                    if ("caption" in response.message) {
+                        text += `${response.message.caption}\n${await Utils.getPhoto(response.message.photo[response.message.photo.length - 1].file_id)}`;
+                    } else {
+                        text += await Utils.getPhoto(response.message.photo[response.message.photo.length - 1].file_id)
+                    }
                 }
 
-                await Utils.sendDiscMsg(avatar, name, `${text}\n\n${path}`);
+                await Utils.sendDiscMsg(avatar, name, text);
             }
         })
     }, 250);

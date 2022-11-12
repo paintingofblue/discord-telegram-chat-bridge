@@ -28,8 +28,8 @@ Utils = {
 
     getPhoto: async function (id) {
         let path = await axios.get(`https://api.telegram.org/bot${tgToken}/getFile?file_id=${id}`);
-        let newpath = `https://api.telegram.org/file/bot${tgToken}/${path.data.result.file_path}`;
-        return newpath
+        let url = `https://api.telegram.org/file/bot${tgToken}/${path.data.result.file_path}`;
+        return url;
     },
 
     /* -- Discord -- */
