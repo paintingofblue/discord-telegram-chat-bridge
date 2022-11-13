@@ -1,21 +1,21 @@
 /* -- Constants -- */
-const { Utils } = require('./utils.js');
+const { Utils } = require('./utils.js').default;
 const { Client } = require('discord.js');
 const client = new Client({ intents: 3276799 });
 const axios = require('axios');
-const ini = require('ini');
 const fs = require('fs');
+const ini = require('ini');
 const config = ini.parse(fs.readFileSync("./config.ini", "utf-8"));
 
 /* -- Variables -- */
 let idDict = {}; // Formatted like {tgId: dcId}, used to give the bridge profile pictures & a name, or else it defaults to a Telegram icon and the username.
-let update_id = null;
+let update_id = ""; // Used to keep track of the last message received, so we don't get duplicates.
 
 /* -- Events -- */
 client.on('ready', async () => {
     /* -- Startup -- */
+    // Get the Discord channel name, and the Telegram channel name.
     await Utils.getTeleChannel().then(async (response) => {
-        // Get the Discord channel name, and the Telegram channel name.
         let discName = client.channels.cache.get(config.discord.channelId).name;
         let teleName = response.result.title;
 
@@ -94,8 +94,8 @@ client.on('ready', async () => {
                                 text += `> ${replyarr.from.username} - ${await Utils.getPhoto(replyarr.photo[replyarr.photo.length - 1].file_id)}\n\n`;
                             }
                         }
-                    } 
-                    
+                    }
+
                     if ("caption" in response.message) {
                         text += `${response.message.caption}\n${await Utils.getPhoto(response.message.photo[response.message.photo.length - 1].file_id)}`;
                     } else {

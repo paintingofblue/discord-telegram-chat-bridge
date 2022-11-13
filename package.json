@@ -1,0 +1,26 @@
+{
+  "name": "discord-telegram-chat-bridge",
+  "version": "1.0.0",
+  "description": "A bridge between Discord and Telegram.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paintingofblue/discord-telegram-chat-bridge.git"
+  },
+  "keywords": [
+    "discord",
+    "telegram",
+    "discord-bridge",
+    "telegram-bridge",
+    "chat-bridge"
+  ],
+  "author": "paintingofblue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paintingofblue/discord-telegram-chat-bridge/issues"
+  },
+  "homepage": "https://github.com/paintingofblue/discord-telegram-chat-bridge#readme"
+}

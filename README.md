@@ -1,14 +1,18 @@
-# Discord Telegram bridge
+# Discord ⇔ Telegram bridge
 
-File to bridge chat between Discord and Telegram. This allows users to send messages & attatchments in a server, and for the message to also be sent in a Telegram group.
-
-![image](https://user-images.githubusercontent.com/90877067/201297882-45093b37-9c65-4c4c-8742-9137bb097306.png)
-
+File to bridge a chat between Discord and Telegram. This allows users to send messages & attachments in a server, and for the message to also be sent in a Telegram group.
 
 ## Supported
 
-* Discord > Telegram (messages & attatchments)
-* Telegram > Discord (messages & attatchments)
+* Discord > Telegram (messages, replies & attachments)
+* Telegram > Discord (messages, replies & attachments)
+
+![image](https://user-images.githubusercontent.com/90877067/201297882-45093b37-9c65-4c4c-8742-9137bb097306.png)
+
+Discord -> Telegram  |  Telegram -> Discord
+:--------------------:|:---------------------:
+![Sending a message in Discord](https://cdn.discordapp.com/attachments/889397754458169385/1040538516238651422/166815413825077623.png) | ![Sending a message in Telegram](https://cdn.discordapp.com/attachments/889397754458169385/1040538702012760104/166815418025119756.png)
+![Seeing the message sent in Telegram](https://cdn.discordapp.com/attachments/889397754458169385/1040538516620312576/166815413825077623.png) | ![Seeing the message sent in Discord](https://cdn.discordapp.com/attachments/889397754458169385/1040538756555477002/166815419425133878.png)
 
 ## Installation
 
@@ -46,9 +50,4 @@ Open the config.ini file provided, and replace the following values:
 * Token - The token BotFather provided you with.
 * Chat ID - The ID of the chat you noted down previously.
 
-Run main.py, and it should now be listening for any messages sent in the server your bot is in.
-
-Discord -> Telegram  |  Telegram -> Discord
-:--------------------:|:---------------------:
-![Sending a message in Discord](https://cdn.discordapp.com/attachments/889397754458169385/1040538516238651422/166815413825077623.png) | ![Sending a message in Telegram](https://cdn.discordapp.com/attachments/889397754458169385/1040538702012760104/166815418025119756.png)
-![Seeing the message sent in Telegram](https://cdn.discordapp.com/attachments/889397754458169385/1040538516620312576/166815413825077623.png) | ![Seeing the message sent in Discord](https://cdn.discordapp.com/attachments/889397754458169385/1040538756555477002/166815419425133878.png)
+Run index.js, and it should now be listening for any messages sent in the channel you configured.
