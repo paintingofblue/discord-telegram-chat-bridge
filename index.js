@@ -1,5 +1,5 @@
 /* -- Constants -- */
-const { Utils } = require('./utils.js').default;
+const { Utils } = require('./utils.js');
 const { Client } = require('discord.js');
 const client = new Client({ intents: 3276799 });
 const axios = require('axios');
